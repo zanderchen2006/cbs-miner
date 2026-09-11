@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CBS Koblenz · MQTT Mitschnitt</title>
+    <link rel="icon" href="/assets/cbs-seal.jpg" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="stripe" aria-hidden="true"></div>
+    <header class="topbar">
+      <button id="sidebar-toggle" type="button" aria-expanded="true" aria-controls="sidebar">
+        «
+      </button>
+      <img class="logo" src="/assets/cbs-logo.png" alt="Carl-Benz-Schule" />
+      <div class="brand">
+        <h1>MQTT Mitschnitt</h1>
+        <p>Carl-Benz-Schule Koblenz · Wir l(i)eben Technik</p>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside id="sidebar">
+        <h2>Anzeige</h2>
+        <label>
+          Gebäude
+          <select id="building"></select>
+        </label>
+        <label>
+          Etage
+          <select id="floor"></select>
+        </label>
+        <label>
+          Raum
+          <select id="room"></select>
+        </label>
+        <label>
+          Gerät
+          <select id="device"></select>
+        </label>
+        <label>
+          Messgröße
+          <select id="metric"></select>
+        </label>
+        <label>
+          Suche
+          <input id="search" type="search" placeholder="Topic oder Wert" />
+        </label>
+        <label>
+          Max. Zeilen
+          <select id="limit">
+            <option>50</option>
+            <option selected>100</option>
+            <option>250</option>
+            <option>500</option>
+            <option>1000</option>
+          </select>
+        </label>
+        <label class="check">
+          <input id="autorefresh" type="checkbox" checked />
+          Live (1 s)
+        </label>
+        <p id="mqtt-status" class="muted"></p>
+        <p id="db-path" class="muted"></p>
+      </aside>
+
+      <main>
+        <section id="empty" class="empty" hidden>
+          <p>Warten auf MQTT <code>cbs_koblenz/#</code> …</p>
+          <code>uv run python src/app.py</code>
+        </section>
+
+        <section id="content" hidden>
+          <div class="stats" id="stats"></div>
+          <h2>
+            Topic-Baum
+            <span id="live-flag" class="live-flag">Live</span>
+          </h2>
+          <div id="tree" class="tree"></div>
+          <h2>Letzter Stand</h2>
+          <div class="cards" id="latest"></div>
+          <h2>Verlauf</h2>
+          <div class="chart-wrap">
+            <svg id="chart" viewBox="0 0 800 220" role="img" aria-label="Verlauf der Messwerte"></svg>
+            <p id="chart-empty" class="muted hidden">Keine Zahlenwerte für einen Verlauf.</p>
+          </div>
+          <h2 id="table-title">Nachrichten</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Lokal</th>
+                  <th>Gebäude</th>
+                  <th>Etage</th>
+                  <th>Raum</th>
+                  <th>Gerät</th>
+                  <th>Messgröße</th>
+                  <th>Wert</th>
+                  <th>Topic</th>
+                </tr>
+              </thead>
+              <tbody id="rows"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="/app.js"></script>
+  </body>
+</html>
