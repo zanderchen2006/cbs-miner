@@ -16,13 +16,64 @@
       <img class="logo" src="/assets/cbs-logo.png" alt="Carl-Benz-Schule" />
       <div class="brand">
         <h1>MQTT Mitschnitt</h1>
-        <p>Carl-Benz-Schule Koblenz · Wir l(i)eben Technik</p>
       </div>
     </header>
 
     <div class="layout">
       <aside id="sidebar">
+        <h2>MQTT-Server</h2>
+        <div id="server-list" class="server-list"></div>
+        <button type="button" id="server-add" class="btn">Server hinzufügen</button>
+
+        <form id="server-form" class="server-form" hidden>
+          <input type="hidden" id="server-id" />
+          <label>
+            Name
+            <input id="server-name" placeholder="z. B. EMQX" />
+          </label>
+          <label>
+            Host
+            <input id="server-host" required placeholder="broker.emqx.io" autocomplete="off" />
+          </label>
+          <label>
+            Port
+            <input id="server-port" type="number" min="1" max="65535" value="8883" />
+          </label>
+          <label class="check">
+            <input id="server-tls" type="checkbox" checked />
+            TLS
+          </label>
+          <label>
+            Benutzer
+            <input id="server-user" autocomplete="off" />
+          </label>
+          <label>
+            Passwort
+            <input id="server-pass" type="password" autocomplete="new-password" />
+          </label>
+          <label>
+            Client-ID
+            <input id="server-client-id" placeholder="automatisch" autocomplete="off" />
+          </label>
+          <label class="check">
+            <input id="server-enabled" type="checkbox" checked />
+            Aktiv
+          </label>
+          <p class="field-label">Topics</p>
+          <div id="server-topics-fields" class="topic-fields"></div>
+          <button type="button" id="topic-add-row" class="btn btn-light">Topic hinzufügen</button>
+          <p id="server-form-error" class="form-error" hidden></p>
+          <div class="form-actions">
+            <button type="submit" class="btn">Speichern</button>
+            <button type="button" id="server-form-cancel" class="btn btn-light">Abbrechen</button>
+          </div>
+        </form>
+
         <h2>Anzeige</h2>
+        <label>
+          Server
+          <select id="server"></select>
+        </label>
         <label>
           Gebäude
           <select id="building"></select>
@@ -67,8 +118,7 @@
 
       <main>
         <section id="empty" class="empty" hidden>
-          <p>Warten auf MQTT <code>cbs_koblenz/#</code> …</p>
-          <code>uv run python src/app.py</code>
+          <p id="empty-text">Lege in der Seitenleiste einen MQTT-Server an.</p>
         </section>
 
         <section id="content" hidden>
@@ -91,6 +141,7 @@
               <thead>
                 <tr>
                   <th>Lokal</th>
+                  <th>Server</th>
                   <th>Gebäude</th>
                   <th>Etage</th>
                   <th>Raum</th>
@@ -106,6 +157,6 @@
         </section>
       </main>
     </div>
-    <script src="/app.js"></script>
+    <script src="/app.js?v=3"></script>
   </body>
 </html>

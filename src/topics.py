@@ -61,6 +61,8 @@ def item_from(
     qos: int,
     retain: bool | int,
     received_at: str,
+    server_id: int | None = None,
+    server_name: str | None = None,
 ) -> dict:
     parsed = parse_topic(topic)
     return {
@@ -75,4 +77,6 @@ def item_from(
         "device": parsed["device"],
         "metric": parsed["metric"],
         "value_num": parse_value(payload),
+        "server_id": server_id,
+        "server_name": server_name,
     }
